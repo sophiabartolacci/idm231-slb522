@@ -41,3 +41,15 @@ h1 {
 .flower-card:hover img {
     transform: scale(1.1); 
 }
+
+@media (max-width: 600px) {
+    #flower_grid {
+        grid-template-columns: repeat(2, max-content); 
+        row-gap: 0.4rem;
+        column-gap: 0.4rem;
+    }
+    .flower-card {
+        width: 100px;
+        height: 100px;
+    }
+}

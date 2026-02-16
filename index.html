@@ -7,12 +7,27 @@
     <title>Flower Finder</title>
   </head>
   <body>
-    <h1>Welcome to Flower Finder!</h1>
-    <p>
+    <h1 class="header">Welcome to Flower Finder!</h1>
+    <p class="header">
       Discover the perfect flower to plant in your garden based on your zodiac
       sign!
     </p>
-    <section id="flower_grid" class="grid"></section>
+    <section id="date-selector-container">
+      <label for="birthdate">Select your birthdate:</label>
+      <input type="date" id="birthdate" />
+      <button id="submit-date">Find My Flower</button>
+    </section>
+    <section id="flower_grid"></section>
+    <section id="info-card" style="display: none">
+      <h2 id="flower_name"></h2>
+      <p id="flower_description"></p>
+      <p id="flower_fun_fact"></p>
+      <p id="flower_difficulty"></p>
+      <p id="flower_sunlight"></p>
+      <p id="flower_watering"></p>
+      <button id="play_sound">Play Sound</button>
+      <button id="back-button">Close Info</button>
+    </section>
     <script src="./src/data.js"></script>
     <script src="./src/app.js"></script>
   </body>

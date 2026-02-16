@@ -1,12 +1,10 @@
 function display_info_card(flower) {
-
-    document.getElementById('flower_grid').style.display = 'none';
-    document.querySelectorAll('.header').forEach(el => el.style.display = 'none');
+    document.getElementById('main-layout').classList.add('active');
     document.getElementById('date-selector-container').style.display = 'none';
-
-    document.getElementById('info-card').style.display = 'block';
+    document.querySelectorAll('.header').forEach(el => el.style.display = 'none');
+    
     document.getElementById('flower_name').textContent = flower.name;
-    document.getElementById('flower_description').textContent = flower.description;
+    document.getElementById('flower_description_content').textContent = flower.description;
     document.getElementById('flower_fun_fact').textContent = `Fun Fact: ${flower.funFact}`;
     document.getElementById('flower_difficulty').textContent = 'Difficulty: ' + '⭐'.repeat(flower.difficulty);
     document.getElementById('flower_sunlight').textContent = 'Sunlight: ' + '☀️'.repeat(flower.sunlight);
@@ -18,8 +16,7 @@ function display_info_card(flower) {
     });
 
     document.getElementById('back-button').addEventListener('click', () => {
-        document.getElementById('info-card').style.display = 'none';
-        document.getElementById('flower_grid').style.display = 'grid';
+        document.getElementById('main-layout').classList.remove('active');
         document.getElementById('date-selector-container').style.display = 'block';
         document.querySelectorAll('.header').forEach(el => el.style.display = 'block');
     });
@@ -52,7 +49,6 @@ function display_grid() {
         card.addEventListener('click', () => {
             display_info_card(flower);
         });
-        grid.appendChild(card);
     });
 }
 

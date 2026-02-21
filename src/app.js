@@ -1,19 +1,35 @@
+let currentFlowerAudio = null;
+
 function display_info_card(flower) {
     document.getElementById('main-layout').classList.add('active');
     document.getElementById('date-selector-container').style.display = 'none';
     document.querySelectorAll('.header').forEach(el => el.style.display = 'none');
-    
+
+    const infoCard = document.getElementById('info-card');
+    infoCard.classList.remove('long-name');
+    if (flower.name === 'Lily of the Valley') infoCard.classList.add('long-name');
+
     document.getElementById('flower_name').textContent = flower.name;
+    document.getElementById('flower_info_image').src = flower.image;
+    document.getElementById('flower_info_image').alt = flower.name;
     document.getElementById('flower_description_content').textContent = flower.description;
     document.getElementById('flower_fun_fact').textContent = `Fun Fact: ${flower.funFact}`;
-    document.getElementById('flower_difficulty').textContent = 'Difficulty: ' + '⭐'.repeat(flower.difficulty);
-    document.getElementById('flower_sunlight').textContent = 'Sunlight: ' + '☀️'.repeat(flower.sunlight);
-    document.getElementById('flower_watering').textContent = 'Watering: ' + '💧'.repeat(flower.watering);
 
-    document.getElementById('play_sound').addEventListener('click', () => {
-        const sound = new Audio(flower.sound);
-        sound.play();
-    });
+    const assetsPath = './assets/';
+    function setCareLevel(elementId, label, iconFilename, count) {
+        const el = document.getElementById(elementId);
+        el.innerHTML = label;
+        for (let i = 0; i < count; i++) {
+            const img = document.createElement('img');
+            img.src = assetsPath + iconFilename;
+            img.alt = '';
+            img.classList.add('care-level-icon');
+            el.appendChild(img);
+        }
+    }
+    setCareLevel('flower_difficulty', 'Difficulty: ', 'star.png', flower.difficulty);
+    setCareLevel('flower_sunlight', 'Sunlight: ', 'sunlight.png', flower.sunlight);
+    setCareLevel('flower_watering', 'Watering: ', 'water.png', flower.watering);
 
     document.getElementById('back-button').addEventListener('click', () => {
         document.getElementById('main-layout').classList.remove('active');
@@ -21,8 +37,8 @@ function display_info_card(flower) {
         document.querySelectorAll('.header').forEach(el => el.style.display = 'block');
     });
 
-    const audio = new Audio(flower.sound);
-    audio.play();
+    currentFlowerAudio = new Audio(flower.sound);
+    currentFlowerAudio.play();
 }
 
 
@@ -55,22 +71,29 @@ function display_grid() {
 document.addEventListener('DOMContentLoaded', () => {
     display_grid();
 
+    document.getElementById('play-sound').addEventListener('click', () => {
+        if (currentFlowerAudio) {
+            currentFlowerAudio.currentTime = 0;
+            currentFlowerAudio.play();
+        }
+    });
+
     document.getElementById('submit-date').addEventListener('click', () => {
-    const birthdate = document.getElementById('birthdate').value;
-    if (!birthdate) {
-        alert('Please select a valid birthdate.');
-        return;
-    }
+        const birthdate = document.getElementById('birthdate').value;
+        if (!birthdate) {
+            alert('Please select a valid birthdate.');
+            return;
+        }
 
-    const date = new Date(birthdate);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+        const date = new Date(birthdate);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
 
-    const zodiac_sign = get_zodiac(month, day);
-    if (!zodiac_sign) {
-        alert('Could not determine zodiac sign. Please check your birthdate.');
-        return;
-    }
-    display_info_card(flower_data[zodiac_sign]);
-});
+        const zodiac_sign = get_zodiac(month, day);
+        if (!zodiac_sign) {
+            alert('Could not determine zodiac sign. Please check your birthdate.');
+            return;
+        }
+        display_info_card(flower_data[zodiac_sign]);
+    });
 });

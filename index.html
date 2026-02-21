@@ -15,18 +15,23 @@
     <section id="date-selector-container">
       <label for="birthdate">Select your birthdate:</label>
       <input type="date" id="birthdate" />
-      <button id="submit-date">Find My Flower</button>
+      <button id="submit-date" class="pixel-button">Find My Flower</button>
     </section>
 
     <div id="main-layout">
       <button id="back-button">
-        <img src="./buttons/back-button.png" alt="Back to Flower Grid" />
+        <img src="./assets/back-button.png" alt="Back to Flower Grid" />
       </button>
 
       <section id="flower_grid"></section>
       <section id="info-card">
-        <h2 id="flower_name"></h2>
-        <button id="play_sound">Play Sound</button>
+        <img id="flower_info_image" src="" alt="" />
+        <div id="info-card-header">
+          <h2 id="flower_name"></h2>
+          <button id="play-sound" type="button" aria-label="Play sound">
+            <img src="./assets/sound.png" alt="" />
+          </button>
+        </div>
         <p id="flower_difficulty"></p>
         <p id="flower_sunlight"></p>
         <p id="flower_watering"></p>

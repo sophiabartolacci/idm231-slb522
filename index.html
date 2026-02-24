@@ -7,6 +7,7 @@
     <title>Flower Finder</title>
   </head>
   <body>
+    <button id="help-button" type="button">Help</button>
     <h1 class="header">Welcome to Flower Finder!</h1>
     <p class="header">
       Discover the perfect flower to plant in your garden based on your zodiac
@@ -15,8 +16,22 @@
     <section id="date-selector-container">
       <label for="birthdate">Select your birthdate:</label>
       <input type="date" id="birthdate" />
-      <button id="submit-date" class="pixel-button">Find My Flower</button>
+      <button id="submit-date">Find My Flower</button>
     </section>
+
+    <div id="help-overlay" aria-hidden="true">
+      <div id="help-backdrop"></div>
+      <div id="help-card">
+        <button id="help-close" type="button" aria-label="Close help">×</button>
+        <h2>How Flower Finder works:</h2>
+        <ul>
+          <li>Pick your birthdate and click the “Find My Flower” button to see what flower is best planted based on the time of year your birthday falls in.</li>
+          <li>Click any flower icon to see more details about that flower. Each card shows the flower's name, care levels (difficulty, sunlight, watering), description, and a fun fact. </li>
+          <li>Use the speaker icon to play the flower's unique sound. </li>
+          <li>Use the back arrow to return to the grid.</li>
+        </ul>
+      </div>
+    </div>
 
     <div id="main-layout">
       <button id="back-button">

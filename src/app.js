@@ -71,6 +71,25 @@ function display_grid() {
 document.addEventListener('DOMContentLoaded', () => {
     display_grid();
 
+    const helpOverlay = document.getElementById('help-overlay');
+    const helpButton = document.getElementById('help-button');
+    const helpClose = document.getElementById('help-close');
+    const helpBackdrop = document.getElementById('help-backdrop');
+
+    function openHelp() {
+        helpOverlay.classList.add('visible');
+        helpOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHelp() {
+        helpOverlay.classList.remove('visible');
+        helpOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    helpButton.addEventListener('click', openHelp);
+    helpClose.addEventListener('click', closeHelp);
+    helpBackdrop.addEventListener('click', closeHelp);
+
     document.getElementById('play-sound').addEventListener('click', () => {
         if (currentFlowerAudio) {
             currentFlowerAudio.currentTime = 0;

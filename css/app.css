@@ -96,10 +96,13 @@ button {
     grid-template-columns: auto 1fr;
     min-height: 560px;
     opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
     position: relative;
     row-gap: 0;
-    transform: translateX(40px);
-    transition: all 0.4s ease;
+    transform: translateX(120vw);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
     width: 50%;
 }
 
@@ -366,6 +369,8 @@ button {
     margin-left: 2rem;
     margin-top: 5rem;
     opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
     text-align: left;
     transform: translateX(0);
 }

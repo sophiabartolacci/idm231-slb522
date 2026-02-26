@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * @description
  * Given a month and day, determine the corresponding Zodiac sign.

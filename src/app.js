@@ -1,13 +1,28 @@
-let currentFlowerAudio = null;
+// @ts-check
+let current_flower_audio = null;
+
+const assets_path = './assets/';
+
+function set_care_level(element_id, label, icon_filename, count) {
+    const el = document.getElementById(element_id);
+    el.innerHTML = label;
+    for (let i = 0; i < count; i++) {
+        const img = document.createElement('img');
+        img.src = assets_path + icon_filename;
+        img.alt = '';
+        img.classList.add('care-level-icon');
+        el.appendChild(img);
+    }
+}
 
 function display_info_card(flower) {
     document.getElementById('main-layout').classList.add('active');
-    document.getElementById('date-selector-container').style.display = 'none';
-    document.querySelectorAll('.header').forEach(el => el.style.display = 'none');
 
-    const infoCard = document.getElementById('info-card');
-    infoCard.classList.remove('long-name');
-    if (flower.name === 'Lily of the Valley') infoCard.classList.add('long-name');
+    const info_card = document.getElementById('info-card');
+    info_card.classList.remove('long-name');
+    if (flower.name === 'Lily of the Valley') {
+        info_card.classList.add('long-name');
+    }
 
     document.getElementById('flower_name').textContent = flower.name;
     document.getElementById('flower_info_image').src = flower.image;
@@ -15,32 +30,13 @@ function display_info_card(flower) {
     document.getElementById('flower_description_content').textContent = flower.description;
     document.getElementById('flower_fun_fact').textContent = `Fun Fact: ${flower.funFact}`;
 
-    const assetsPath = './assets/';
-    function setCareLevel(elementId, label, iconFilename, count) {
-        const el = document.getElementById(elementId);
-        el.innerHTML = label;
-        for (let i = 0; i < count; i++) {
-            const img = document.createElement('img');
-            img.src = assetsPath + iconFilename;
-            img.alt = '';
-            img.classList.add('care-level-icon');
-            el.appendChild(img);
-        }
-    }
-    setCareLevel('flower_difficulty', 'Difficulty: ', 'star.png', flower.difficulty);
-    setCareLevel('flower_sunlight', 'Sunlight: ', 'sunlight.png', flower.sunlight);
-    setCareLevel('flower_watering', 'Watering: ', 'water.png', flower.watering);
+    set_care_level('flower_difficulty', 'Difficulty: ', 'star.png', flower.difficulty);
+    set_care_level('flower_sunlight', 'Sunlight: ', 'sunlight.png', flower.sunlight);
+    set_care_level('flower_watering', 'Watering: ', 'water.png', flower.watering);
 
-    document.getElementById('back-button').addEventListener('click', () => {
-        document.getElementById('main-layout').classList.remove('active');
-        document.getElementById('date-selector-container').style.display = 'block';
-        document.querySelectorAll('.header').forEach(el => el.style.display = 'block');
-    });
-
-    currentFlowerAudio = new Audio(flower.sound);
-    currentFlowerAudio.play();
+    current_flower_audio = new Audio(flower.sound);
+    current_flower_audio.play();
 }
-
 
 function display_grid() {
     const grid = document.getElementById('flower_grid');
@@ -68,51 +64,53 @@ function display_grid() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function open_help() {
+    const help_overlay = document.getElementById('help-overlay');
+    help_overlay.classList.add('visible');
+    help_overlay.setAttribute('aria-hidden', 'false');
+}
+
+function close_help() {
+    const help_overlay = document.getElementById('help-overlay');
+    help_overlay.classList.remove('visible');
+    help_overlay.setAttribute('aria-hidden', 'true');
+}
+
+function handle_play_sound_click() {
+    if (current_flower_audio) {
+        current_flower_audio.currentTime = 0;
+        current_flower_audio.play();
+    }
+}
+
+function handle_submit_date_click() {
+    const birthdate = document.getElementById('birthdate').value;
+    if (!birthdate) {
+        alert('Please select a valid birthdate.');
+        return;
+    }
+
+    const date = new Date(birthdate);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const zodiac_sign = get_zodiac(month, day);
+    if (!zodiac_sign) {
+        alert('Could not determine zodiac sign. Please check your birthdate.');
+        return;
+    }
+    display_info_card(flower_data[zodiac_sign]);
+}
+
+function init() {
     display_grid();
 
-    const helpOverlay = document.getElementById('help-overlay');
-    const helpButton = document.getElementById('help-button');
-    const helpClose = document.getElementById('help-close');
-    const helpBackdrop = document.getElementById('help-backdrop');
+    document.getElementById('help-button').addEventListener('click', open_help);
+    document.getElementById('help-close').addEventListener('click', close_help);
+    document.getElementById('help-backdrop').addEventListener('click', close_help);
 
-    function openHelp() {
-        helpOverlay.classList.add('visible');
-        helpOverlay.setAttribute('aria-hidden', 'false');
-    }
+    document.getElementById('play-sound').addEventListener('click', handle_play_sound_click);
+    document.getElementById('submit-date').addEventListener('click', handle_submit_date_click);
+}
 
-    function closeHelp() {
-        helpOverlay.classList.remove('visible');
-        helpOverlay.setAttribute('aria-hidden', 'true');
-    }
-
-    helpButton.addEventListener('click', openHelp);
-    helpClose.addEventListener('click', closeHelp);
-    helpBackdrop.addEventListener('click', closeHelp);
-
-    document.getElementById('play-sound').addEventListener('click', () => {
-        if (currentFlowerAudio) {
-            currentFlowerAudio.currentTime = 0;
-            currentFlowerAudio.play();
-        }
-    });
-
-    document.getElementById('submit-date').addEventListener('click', () => {
-        const birthdate = document.getElementById('birthdate').value;
-        if (!birthdate) {
-            alert('Please select a valid birthdate.');
-            return;
-        }
-
-        const date = new Date(birthdate);
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-
-        const zodiac_sign = get_zodiac(month, day);
-        if (!zodiac_sign) {
-            alert('Could not determine zodiac sign. Please check your birthdate.');
-            return;
-        }
-        display_info_card(flower_data[zodiac_sign]);
-    });
-});
+document.addEventListener('DOMContentLoaded', init);

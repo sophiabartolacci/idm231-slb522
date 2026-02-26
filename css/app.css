@@ -24,6 +24,7 @@ body {
     font-family: 'pixel', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    padding-top: 3rem;
     text-align: center;
 }
 
@@ -101,7 +102,7 @@ button {
     position: relative;
     row-gap: 0;
     transform: translateX(120vw);
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
     width: 50%;
 }
@@ -245,27 +246,6 @@ button {
     transform: translate(2px, 2px);
 }
 
-#back-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: none;
-    left: 1rem;
-    padding: 0;
-    position: absolute;
-    top: 0.5rem;
-}
-
-#back-button img {
-    height: 5.625rem;
-    transition: transform 0.3s;
-    width: 90px;
-}
-
-#back-button img:hover {
-    transform: scale(1.1);
-}
-
 #flower_info_image {
     grid-row: 1 / 5;
     height: 13.75rem;
@@ -386,10 +366,6 @@ button {
     margin: 0 8rem 0 0.5rem;
 }
 
-#main-layout.active #back-button {
-    display: block;
-}
-
 @media (max-width: 768px) {
     body {
         padding-left: 1.5rem;
@@ -475,10 +451,6 @@ button {
         margin: 1rem 0.5rem 0 0.5rem;
     }
 
-    #main-layout.active #back-button img {
-        height: 3.75rem;
-        width: 3.75rem;
-    }
 }
 
 @media (max-width: 600px) {
